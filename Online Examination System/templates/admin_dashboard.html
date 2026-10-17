@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Admin Dashboard</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+body{
+    background:#f4f7fc;
+    font-family:'Segoe UI',sans-serif;
+}
+
+/* Sidebar */
+
+.sidebar{
+
+position:fixed;
+
+left:0;
+
+top:0;
+
+width:260px;
+
+height:100vh;
+
+background:#111827;
+
+color:white;
+
+overflow-y:auto;
+
+padding-top:20px;
+
+box-shadow:3px 0 15px rgba(0,0,0,.15);
+
+}
+
+.sidebar h3{
+
+text-align:center;
+
+margin-bottom:35px;
+
+font-weight:bold;
+
+}
+
+.sidebar a{
+
+display:block;
+
+padding:15px 25px;
+
+color:#d1d5db;
+
+text-decoration:none;
+
+transition:.3s;
+
+font-size:16px;
+
+}
+
+.sidebar a:hover{
+
+background:#2563eb;
+
+color:white;
+
+padding-left:35px;
+
+}
+
+.main{
+
+margin-left:260px;
+
+}
+
+/* Navbar */
+
+.topbar{
+
+background:white;
+
+padding:15px 30px;
+
+box-shadow:0 3px 15px rgba(0,0,0,.08);
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+}
+
+.topbar h4{
+
+margin:0;
+
+font-weight:700;
+
+color:#111827;
+
+}
+
+/* Cards */
+
+.dashboard-card{
+
+border:none;
+
+border-radius:18px;
+
+overflow:hidden;
+
+box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+transition:.4s;
+
+}
+
+.dashboard-card:hover{
+
+transform:translateY(-8px);
+
+box-shadow:0 15px 35px rgba(0,0,0,.18);
+
+}
+
+.card-body i{
+
+font-size:45px;
+
+margin-bottom:10px;
+
+}
+
+.card-body h2{
+
+font-weight:bold;
+
+}
+
+.card-body p{
+
+margin-bottom:0;
+
+}
+
+/* Buttons */
+
+.btn{
+
+border-radius:10px;
+
+font-weight:600;
+
+}
+
+/* Chart */
+
+.chart-card{
+
+background:white;
+
+padding:20px;
+
+border-radius:18px;
+
+box-shadow:0 5px 20px rgba(0,0,0,.08);
+
+}
+
+/* Statistics */
+
+.stat-card{
+
+border:none;
+
+border-radius:15px;
+
+box-shadow:0 5px 20px rgba(0,0,0,.08);
+
+}
+
+/* Responsive */
+
+@media(max-width:991px){
+
+.sidebar{
+
+width:100%;
+
+height:auto;
+
+position:relative;
+
+}
+
+.main{
+
+margin-left:0;
+
+}
+/* ================= Analytics Cards ================= */
+
+.stat-card{
+
+border:none;
+
+border-radius:20px;
+
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+transition:.35s;
+
+background:#fff;
+
+}
+
+.stat-card:hover{
+
+transform:translateY(-8px);
+
+box-shadow:0 18px 40px rgba(0,0,0,.18);
+
+}
+
+.progress{
+
+border-radius:20px;
+
+background:#e9ecef;
+
+}
+
+.progress-bar{
+
+border-radius:20px;
+
+transition:width 1.5s ease;
+
+}
+/* ================= Charts ================= */
+
+.chart-card{
+
+background:#ffffff;
+
+border-radius:20px;
+
+padding:25px;
+
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+transition:.35s;
+
+}
+
+.chart-card:hover{
+
+transform:translateY(-6px);
+
+box-shadow:0 18px 35px rgba(0,0,0,.15);
+
+}
+
+canvas{
+
+max-width:100%;
+
+}
+
+
+    /* ================= Footer ================= */
+
+.footer{
+
+margin-top:50px;
+
+padding:20px;
+
+background:#ffffff;
+
+border-top:1px solid #ddd;
+
+text-align:center;
+
+font-size:15px;
+
+color:#6c757d;
+
+box-shadow:0 -2px 10px rgba(0,0,0,.05);
+
+}
+
+
+/* ================= Notification Badge ================= */
+
+.badge{
+
+animation:pulse 1.5s infinite;
+
+}
+
+@keyframes pulse{
+
+0%{
+
+transform:scale(1);
+
+}
+
+50%{
+
+transform:scale(1.2);
+
+}
+
+100%{
+
+transform:scale(1);
+
+}
+
+}
+
+
+/* ================= Number Animation ================= */
+
+.counter{
+
+font-weight:bold;
+
+}
+
+
+/* ================= Card Hover ================= */
+
+.dashboard-card:hover i{
+
+transform:scale(1.15);
+
+transition:.4s;
+
+}
+
+.dashboard-card i{
+
+transition:.4s;
+
+}
+
+
+/* ================= Scrollbar ================= */
+
+::-webkit-scrollbar{
+
+width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:#f1f1f1;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:#4e73df;
+
+border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+background:#224abe;
+
+}
+
+
+/* ================= Gradient Background ================= */
+
+body{
+
+background:linear-gradient(to right,#eef2ff,#f8fbff);
+
+}
+
+
+/* ================= Topbar ================= */
+
+#currentTime{
+
+font-weight:bold;
+
+color:#4e73df;
+
+font-size:15px;
+
+}
+    .chart-container{
+
+width:100%;
+
+height:240px;
+
+position:relative;
+
+}
+
+.chart-container-line{
+
+width:100%;
+
+height:280px;
+
+position:relative;
+
+}
+
+.chart-card{
+
+padding:20px;
+
+border-radius:18px;
+
+background:#fff;
+
+box-shadow:0 5px 20px rgba(0,0,0,.08);
+
+margin-bottom:20px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- Sidebar -->
+
+<div class="sidebar">
+
+<h3>
+<i class="bi bi-mortarboard-fill"></i>
+Exam Admin
+</h3>
+
+<a href="{{ url_for('admin_dashboard') }}">
+<i class="bi bi-speedometer2"></i>
+Dashboard
+</a>
+
+<a href="{{ url_for('view_students') }}">
+<i class="bi bi-people-fill"></i>
+Students
+</a>
+
+<a href="{{ url_for('view_subjects') }}">
+<i class="bi bi-book-fill"></i>
+Subjects
+</a>
+
+<a href="{{ url_for('view_questions') }}">
+<i class="bi bi-question-circle-fill"></i>
+Questions
+</a>
+
+<a href="{{ url_for('view_exam') }}">
+<i class="bi bi-file-earmark-text-fill"></i>
+Exams
+</a>
+
+<a href="{{ url_for('view_results') }}">
+<i class="bi bi-bar-chart-fill"></i>
+Results
+</a>
+
+<a href="{{ url_for('student_rank') }}">
+<i class="bi bi-trophy-fill"></i>
+Ranking
+</a>
+
+<a href="{{ url_for('leaderboard') }}">
+<i class="bi bi-award-fill"></i>
+Leaderboard
+</a>
+
+<a href="{{ url_for('view_notifications') }}">
+<i class="bi bi-bell-fill"></i>
+Notifications
+
+{% if notification_count > 0 %}
+
+<span class="badge bg-danger ms-2">
+
+{{ notification_count }}
+
+</span>
+
+{% endif %}
+
+</a>
+
+<a href="{{ url_for('admin_logout') }}">
+<i class="bi bi-box-arrow-right"></i>
+Logout
+</a>
+
+</div>
+
+<!-- Main -->
+
+<div class="main">
+
+<!-- Topbar -->
+
+<div class="topbar">
+
+<div>
+
+<h4 class="fw-bold">
+
+Welcome Admin 👋
+
+</h4>
+
+<small class="text-muted">
+
+Online Examination System
+
+</small>
+
+</div>
+
+<div class="text-end">
+
+<div id="currentTime"></div>
+
+</div>
+
+</div>
+<div class="container-fluid mt-4">
+
+<h2 class="mb-4 fw-bold">
+
+Dashboard Overview
+
+</h2>
+
+<div class="row">
+    <!-- Dashboard Cards -->
+
+<div class="col-lg-3 col-md-6 mb-4">
+
+<a href="{{ url_for('view_students') }}" class="text-decoration-none">
+
+<div class="card dashboard-card text-white"
+style="background:linear-gradient(135deg,#4e73df,#224abe);">
+
+<div class="card-body text-center">
+
+<i class="bi bi-people-fill"></i>
+
+<h5 class="mt-3">Total Students</h5>
+
+<h2>{{ total_students }}</h2>
+
+<small>Click to View Details</small>
+
+</div>
+
+</div>
+
+</a>
+
+</div>
+
+
+<div class="col-lg-3 col-md-6 mb-4">
+
+<a href="{{ url_for('view_questions') }}" class="text-decoration-none">
+
+<div class="card dashboard-card text-white"
+style="background:linear-gradient(135deg,#1cc88a,#13855c);">
+
+<div class="card-body text-center">
+
+<i class="bi bi-patch-question-fill"></i>
+
+<h5 class="mt-3">Questions</h5>
+
+<h2>{{ total_questions }}</h2>
+
+<small>Manage Questions</small>
+
+</div>
+
+</div>
+
+</a>
+
+</div>
+
+
+<div class="col-lg-3 col-md-6 mb-4">
+
+<a href="{{ url_for('view_subjects') }}" class="text-decoration-none">
+
+<div class="card dashboard-card text-dark"
+style="background:linear-gradient(135deg,#f6c23e,#f4b619);">
+
+<div class="card-body text-center">
+
+<i class="bi bi-book-half"></i>
+
+<h5 class="mt-3">Subjects</h5>
+
+<h2>{{ total_subjects }}</h2>
+
+<small>View Subjects</small>
+
+</div>
+
+</div>
+
+</a>
+
+</div>
+
+
+<div class="col-lg-3 col-md-6 mb-4">
+
+<a href="{{ url_for('view_exam') }}" class="text-decoration-none">
+
+<div class="card dashboard-card text-white"
+style="background:linear-gradient(135deg,#36b9cc,#258391);">
+
+<div class="card-body text-center">
+
+<i class="bi bi-file-earmark-text-fill"></i>
+
+<h5 class="mt-3">Total Exams</h5>
+
+<h2>{{ total_exams_taken }}</h2>
+
+<small>Exam Records</small>
+
+</div>
+
+</div>
+
+</a>
+
+</div>
+    <!-- ================= Quick Actions ================= -->
+
+<hr class="my-4">
+
+<h4 class="fw-bold mb-4">
+
+<i class="bi bi-lightning-charge-fill text-warning"></i>
+
+Quick Actions
+
+</h4>
+
+<div class="row g-4">
+
+<!-- Add Subject -->
+
+<div class="col-lg-3 col-md-4 col-sm-6">
+
+<a href="{{ url_for('add_subject') }}"
+class="text-decoration-none">
+
+<div class="card dashboard-card h-100">
+
+<div class="card-body text-center">
+
+<div class="bg-success rounded-circle d-inline-flex align-items-center justify-content-center"
+style="width:70px;height:70px;">
+
+<i class="bi bi-book-half text-white fs-2"></i>
+
+</div>
+
+<h5 class="mt-3">Add Subject</h5>
+
+<p class="text-muted mb-0">
+
+Create New Subject
+
+</p>
+
+</div>
+
+</div>
+
+</a>
+
+</div>
+
+
+<!-- Add Question -->
+
+<div class="col-lg-3 col-md-4 col-sm-6">
+
+<a href="{{ url_for('add_question') }}"
+class="text-decoration-none">
+
+<div class="card dashboard-card h-100">
+
+<div class="card-body text-center">
+
+<div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center"
+style="width:70px;height:70px;">
+
+<i class="bi bi-patch-question-fill text-white fs-2"></i>
+
+</div>
+
+<h5 class="mt-3">
+
+Add Question
+
+</h5>
+
+<p class="text-muted mb-0">
+
+Manage Questions
+
+</p>
+
+</div>
+
+</div>
+
+</a>
+
+</div>
+
+
+<!-- View Questions -->
+
+<div class="col-lg-3 col-md-4 col-sm-6">
+
+<a href="{{ url_for('view_questions') }}"
+class="text-decoration-none">
+
+<div class="card dashboard-card h-100">
+
+<div class="card-body text-center">
+
+<div class="bg-secondary rounded-circle d-inline-flex align-items-center justify-content-center"
+style="width:70px;height:70px;">
+
+<i class="bi bi-list-check text-white fs-2"></i>
+
+</div>
+
+<h5 class="mt-3">
+
+Questions
+
+</h5>
+
+<p class="text-muted mb-0">
+
+View All Questions
+
+</p>
+
+</div>
+
+</div>
+
+</a>
+
+</div>
+
+
+<!-- Student Results -->
+
+<div class="col-lg-3 col-md-4 col-sm-6">
+
+<a href="{{ url_for('view_results') }}"
+class="text-decoration-none">
+
+<div class="card dashboard-card h-100">
+
+<div class="card-body text-center">
+
+<div class="bg-info rounded-circle d-inline-flex align-items-center justify-content-center"
+style="width:70px;height:70px;">
+
+<i class="bi bi-bar-chart-line-fill text-white fs-2"></i>
+
+</div>
+
+<h5 class="mt-3">
+
+Student Results
+
+</h5>
+
+<p class="text-muted mb-0">
+
+View Exam Results
+
+</p>
+
+</div>
+
+</div>
+
+</a>
+
+</div>
+
+
+<!-- Bulk Upload -->
+
+<div class="col-lg-3 col-md-4 col-sm-6">
+
+<a href="{{ url_for('upload_questions') }}"
+class="text-decoration-none">
+
+<div class="card dashboard-card h-100">
+
+<div class="card-body text-center">
+
+<div class="bg-warning rounded-circle d-inline-flex align-items-center justify-content-center"
+style="width:70px;height:70px;">
+
+<i class="bi bi-upload text-white fs-2"></i>
+
+</div>
+
+<h5 class="mt-3">
+
+Bulk Upload
+
+</h5>
+
+<p class="text-muted mb-0">
+
+Upload Excel File
+
+</p>
+
+</div>
+
+</div>
+
+</a>
+
+</div>
+
+
+<!-- Download Template -->
+
+<div class="col-lg-3 col-md-4 col-sm-6">
+
+<a href="{{ url_for('download_question_template') }}"
+class="text-decoration-none">
+
+<div class="card dashboard-card h-100">
+
+<div class="card-body text-center">
+
+<div class="bg-dark rounded-circle d-inline-flex align-items-center justify-content-center"
+style="width:70px;height:70px;">
+
+<i class="bi bi-file-earmark-excel-fill text-white fs-2"></i>
+
+</div>
+
+<h5 class="mt-3">
+
+Excel Template
+
+</h5>
+
+<p class="text-muted mb-0">
+
+Download Template
+
+</p>
+
+</div>
+
+</div>
+
+</a>
+
+</div>
+
+
+<!-- Student Ranking -->
+
+<div class="col-lg-3 col-md-4 col-sm-6">
+
+<a href="{{ url_for('student_rank') }}"
+class="text-decoration-none">
+
+<div class="card dashboard-card h-100">
+
+<div class="card-body text-center">
+
+<div class="bg-danger rounded-circle d-inline-flex align-items-center justify-content-center"
+style="width:70px;height:70px;">
+
+<i class="bi bi-trophy-fill text-white fs-2"></i>
+
+</div>
+
+<h5 class="mt-3">
+
+Student Ranking
+
+</h5>
+
+<p class="text-muted mb-0">
+
+Top Performers
+
+</p>
+
+</div>
+
+</div>
+
+</a>
+
+</div>
+
+
+<!-- Leaderboard -->
+
+<div class="col-lg-3 col-md-4 col-sm-6">
+
+<a href="{{ url_for('leaderboard') }}"
+class="text-decoration-none">
+
+<div class="card dashboard-card h-100">
+
+<div class="card-body text-center">
+
+<div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center"
+style="width:70px;height:70px;">
+
+<i class="bi bi-award-fill text-white fs-2"></i>
+
+</div>
+
+<h5 class="mt-3">
+
+Leaderboard
+
+</h5>
+
+<p class="text-muted mb-0">
+
+Overall Ranking
+
+</p>
+
+</div>
+
+</div>
+
+</a>
+
+</div>
+
+
+<!-- Notifications -->
+
+<div class="col-lg-3 col-md-4 col-sm-6">
+
+<a href="{{ url_for('view_notifications') }}"
+class="text-decoration-none">
+
+<div class="card dashboard-card h-100 border-warning">
+
+<div class="card-body text-center position-relative">
+
+<div class="bg-warning rounded-circle d-inline-flex align-items-center justify-content-center"
+style="width:70px;height:70px;">
+
+<i class="bi bi-bell-fill text-white fs-2"></i>
+
+</div>
+
+{% if notification_count > 0 %}
+
+<span class="position-absolute top-0 end-0 badge rounded-pill bg-danger">
+
+{{ notification_count }}
+
+</span>
+
+{% endif %}
+
+<h5 class="mt-3">
+
+Notifications
+
+</h5>
+
+<p class="text-muted mb-0">
+
+Latest Updates
+
+</p>
+
+</div>
+
+</div>
+
+</a>
+
+</div>
+
+</div>
+
+<hr class="my-5">
+    <!-- ================= Analytics ================= -->
+
+<h3 class="fw-bold mb-4">
+
+<i class="bi bi-graph-up-arrow text-primary"></i>
+
+Exam Analytics
+
+</h3>
+
+<div class="row g-4">
+
+<!-- PASS -->
+
+<div class="col-lg-4">
+
+<div class="card stat-card">
+
+<div class="card-body">
+
+<div class="d-flex justify-content-between align-items-center">
+
+<div>
+
+<h6 class="text-success fw-bold">
+
+PASS RATE
+
+</h6>
+
+<h2 class="fw-bold text-success">
+
+{{ pass_percent }}%
+
+</h2>
+
+</div>
+
+<div>
+
+<i class="bi bi-check-circle-fill text-success"
+style="font-size:55px;"></i>
+
+</div>
+
+</div>
+
+<div class="progress mt-3" style="height:10px;">
+
+<div class="progress-bar bg-success"
+
+style="width:{{ pass_percent }}%;">
+
+</div>
+
+</div>
+
+<p class="mt-3 text-muted mb-0">
+
+Students who successfully passed.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- FAIL -->
+
+<div class="col-lg-4">
+
+<div class="card stat-card">
+
+<div class="card-body">
+
+<div class="d-flex justify-content-between align-items-center">
+
+<div>
+
+<h6 class="text-danger fw-bold">
+
+FAIL RATE
+
+</h6>
+
+<h2 class="fw-bold text-danger">
+
+{{ fail_percent }}%
+
+</h2>
+
+</div>
+
+<div>
+
+<i class="bi bi-x-circle-fill text-danger"
+style="font-size:55px;"></i>
+
+</div>
+
+</div>
+
+<div class="progress mt-3" style="height:10px;">
+
+<div class="progress-bar bg-danger"
+
+style="width:{{ fail_percent }}%;">
+
+</div>
+
+</div>
+
+<p class="mt-3 text-muted mb-0">
+
+Students who did not qualify.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Average Score -->
+
+<div class="col-lg-4">
+
+<div class="card stat-card">
+
+<div class="card-body">
+
+<div class="d-flex justify-content-between align-items-center">
+
+<div>
+
+<h6 class="text-primary fw-bold">
+
+AVERAGE SCORE
+
+</h6>
+
+<h2 class="fw-bold text-primary">
+
+{{ average_score }}
+
+</h2>
+
+</div>
+
+<div>
+
+<i class="bi bi-bar-chart-fill text-primary"
+style="font-size:55px;"></i>
+
+</div>
+
+</div>
+
+<div class="progress mt-3" style="height:10px;">
+
+<div class="progress-bar bg-primary"
+
+style="width:{{ average_score }}%;">
+
+</div>
+
+</div>
+
+<p class="mt-3 text-muted mb-0">
+
+Average marks obtained by students.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<hr class="my-5">
+    <!-- ================= Charts ================= -->
+
+<h3 class="fw-bold mb-4">
+
+<i class="bi bi-pie-chart-fill text-primary"></i>
+
+Dashboard Analytics
+
+</h3>
+
+<div class="row">
+
+    <!-- Pie Chart -->
+
+    <div class="col-lg-6 mb-4">
+
+        <div class="chart-card">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                <h5 class="fw-bold mb-0">
+
+                    Pass vs Fail
+
+                </h5>
+
+                <i class="bi bi-pie-chart-fill text-primary fs-3"></i>
+
+            </div>
+
+            <div class="chart-container">
+    <canvas id="pieChart"></canvas>
+</div>
+
+        </div>
+
+    </div>
+
+    <!-- Bar Chart -->
+
+    <div class="col-lg-6 mb-4">
+
+        <div class="chart-card">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                <h5 class="fw-bold mb-0">
+
+                    System Statistics
+
+                </h5>
+
+                <i class="bi bi-bar-chart-fill text-success fs-3"></i>
+
+            </div>
+
+            <div class="chart-container">
+    <canvas id="barChart"></canvas>
+</div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="row">
+
+    <div class="col-lg-12">
+
+        <div class="chart-card">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                <h5 class="fw-bold mb-0">
+
+                    Overall Examination Report
+
+                </h5>
+
+                <i class="bi bi-graph-up-arrow text-danger fs-3"></i>
+
+            </div>
+
+           <div class="chart-container-line">
+    <canvas id="lineChart"></canvas>
+</div>
+
+        </div>
+
+    </div>
+
+</div>
+</div>
+
+<footer class="footer">
+
+<strong>
+
+Online Examination System
+
+</strong>
+
+<br>
+
+Designed with ❤️ using Flask & Bootstrap
+
+<br>
+
+© 2026 All Rights Reserved
+
+</footer>
+</div>
+</div>
+<script>
+
+// =====================
+// Live Date & Time
+// =====================
+
+function updateClock(){
+
+let now=new Date();
+
+document.getElementById("currentTime").innerHTML=
+now.toLocaleDateString()+" | "+now.toLocaleTimeString();
+
+}
+
+setInterval(updateClock,1000);
+
+updateClock();
+
+
+// =====================
+// Counter Animation
+// =====================
+
+document.querySelectorAll("h2").forEach(function(counter){
+
+let target=parseFloat(counter.innerText);
+
+if(isNaN(target)) return;
+
+let count=0;
+
+let speed=target/50;
+
+let interval=setInterval(function(){
+
+count+=speed;
+
+if(count>=target){
+
+counter.innerText=target;
+
+clearInterval(interval);
+
+}else{
+
+counter.innerText=Math.floor(count);
+
+}
+
+},20);
+
+});
+
+
+
+// =====================
+// PIE CHART
+// =====================
+
+new Chart(document.getElementById("pieChart"),{
+
+type:"doughnut",
+
+data:{
+
+labels:["PASS","FAIL"],
+
+datasets:[{
+
+data:[{{ pass_percent }},{{ fail_percent }}],
+
+backgroundColor:[
+"#28a745",
+"#dc3545"
+],
+
+hoverOffset:15
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+maintainAspectRatio:false,
+
+plugins:{
+
+legend:{
+
+position:"bottom"
+
+}
+
+}
+
+}
+
+});
+
+
+
+
+// =====================
+// BAR CHART
+// =====================
+
+new Chart(document.getElementById("barChart"),{
+
+type:"bar",
+
+data:{
+
+labels:[
+
+"Students",
+
+"Subjects",
+
+"Questions",
+
+"Exams"
+
+],
+
+datasets:[{
+
+label:"Count",
+
+data:[
+
+{{ total_students }},
+
+{{ total_subjects }},
+
+{{ total_questions }},
+
+{{ total_exams_taken }}
+
+],
+
+backgroundColor:[
+
+"#4e73df",
+
+"#1cc88a",
+
+"#f6c23e",
+
+"#36b9cc"
+
+],
+
+borderRadius:10
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+maintainAspectRatio:true,
+aspectRatio:1.6,
+
+plugins:{
+
+legend:{
+
+display:false
+
+}
+
+},
+
+scales:{
+
+y:{
+
+beginAtZero:true
+
+}
+
+}
+
+}
+
+});
+
+
+
+
+// =====================
+// LINE CHART
+// =====================
+
+new Chart(document.getElementById("lineChart"),{
+
+type:"line",
+
+data:{
+
+labels:[
+
+"Students",
+
+"Subjects",
+
+"Questions",
+
+"Exams"
+
+],
+
+datasets:[{
+
+label:"Overall Examination Report",
+
+data:[
+
+{{ total_students }},
+
+{{ total_subjects }},
+
+{{ total_questions }},
+
+{{ total_exams_taken }}
+
+],
+
+borderColor:"#4e73df",
+
+backgroundColor:"rgba(78,115,223,0.2)",
+
+fill:true,
+
+tension:0.4,
+
+pointRadius:5,
+
+pointBackgroundColor:"#4e73df"
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+maintainAspectRatio:true,
+aspectRatio:2.8,
+
+plugins:{
+
+legend:{
+
+display:true
+
+}
+
+},
+
+scales:{
+
+y:{
+
+beginAtZero:true
+
+}
+
+}
+
+}
+
+});
+
+</script>
+</body>
+</html>

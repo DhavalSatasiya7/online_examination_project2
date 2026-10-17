@@ -1,0 +1,1875 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+```
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>
+    Student Dashboard | Online Examination System
+</title>
+
+
+<!-- =====================================================
+     DASHBOARD CSS
+====================================================== -->
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+
+<!-- =====================================================
+     BOOTSTRAP
+====================================================== -->
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet">
+
+
+<!-- =====================================================
+     FONT AWESOME
+====================================================== -->
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+<!-- =====================================================
+     EXTRA DASHBOARD STYLE
+====================================================== -->
+
+<style>
+
+    /* =================================================
+       PAGE
+    ================================================= */
+
+    body {
+
+        background:
+            linear-gradient(
+                135deg,
+                #eef4ff,
+                #f8fbff
+            );
+
+        min-height: 100vh;
+
+    }
+
+
+    /* =================================================
+       HEADER
+    ================================================= */
+
+    header {
+
+        background:
+            linear-gradient(
+                135deg,
+                #0d6efd,
+                #084298
+            );
+
+        color: white;
+
+        padding: 22px 5%;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        box-shadow:
+            0 4px 15px
+            rgba(0,0,0,0.15);
+
+    }
+
+
+    header h1 {
+
+        margin: 0;
+
+        font-size: 28px;
+
+        font-weight: 700;
+
+    }
+
+
+    header p {
+
+        margin: 4px 0 0;
+
+        opacity: 0.9;
+
+    }
+
+
+    .logout-btn {
+
+        text-decoration: none;
+
+        color: white;
+
+        background:
+            rgba(255,255,255,0.15);
+
+        border:
+            1px solid
+            rgba(255,255,255,0.4);
+
+        padding: 10px 18px;
+
+        border-radius: 10px;
+
+        transition: 0.3s;
+
+    }
+
+
+    .logout-btn:hover {
+
+        background: white;
+
+        color: #0d6efd;
+
+    }
+
+
+    /* =================================================
+       MAIN CONTAINER
+    ================================================= */
+
+    .container {
+
+        max-width: 1400px;
+
+        margin: auto;
+
+        padding: 35px 20px 60px;
+
+    }
+
+
+    /* =================================================
+       WELCOME
+    ================================================= */
+
+    .welcome-card {
+
+        background: white;
+
+        border-radius: 18px;
+
+        padding: 25px;
+
+        margin-bottom: 30px;
+
+        box-shadow:
+            0 8px 30px
+            rgba(0,0,0,0.08);
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+
+        gap: 20px;
+
+    }
+
+
+    .welcome-card h2 {
+
+        margin: 0;
+
+        color: #172b4d;
+
+        font-weight: 700;
+
+    }
+
+
+    .welcome-card p {
+
+        margin: 7px 0 0;
+
+        color: #6c757d;
+
+    }
+
+
+    .welcome-icon {
+
+        width: 65px;
+
+        height: 65px;
+
+        border-radius: 50%;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        background: #e7f0ff;
+
+        color: #0d6efd;
+
+        font-size: 28px;
+
+        overflow: hidden;
+
+        padding: 0;
+
+    }
+
+    .welcome-icon img,
+    .dashboard-photo,
+    .header-photo {
+
+        width: 65px;
+
+        height: 65px;
+
+        border-radius: 50%;
+
+        object-fit: cover;
+
+        border: 3px solid rgba(255,255,255,0.7);
+
+    }
+
+    .header-user {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 16px;
+
+    }
+
+
+    /* =================================================
+       STATISTICS
+    ================================================= */
+
+    .stats-grid {
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+        gap: 22px;
+
+        margin-bottom: 40px;
+
+    }
+
+
+    .card {
+
+        background: white;
+
+        border: none;
+
+        border-radius: 18px;
+
+        padding: 25px;
+
+        box-shadow:
+            0 8px 25px
+            rgba(0,0,0,0.07);
+
+        transition: 0.3s;
+
+    }
+
+
+    .card:hover {
+
+        transform: translateY(-4px);
+
+        box-shadow:
+            0 12px 30px
+            rgba(0,0,0,0.12);
+
+    }
+
+
+    .stat-card {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 20px;
+
+    }
+
+
+    .stat-icon {
+
+        width: 65px;
+
+        height: 65px;
+
+        min-width: 65px;
+
+        border-radius: 15px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        font-size: 27px;
+
+    }
+
+
+    .blue-icon {
+
+        background: #e7f0ff;
+
+        color: #0d6efd;
+
+    }
+
+
+    .green-icon {
+
+        background: #e6f8ee;
+
+        color: #198754;
+
+    }
+
+
+    .purple-icon {
+
+        background: #f0e7ff;
+
+        color: #6f42c1;
+
+    }
+
+
+    .stat-card h3 {
+
+        margin: 0;
+
+        font-size: 16px;
+
+        color: #6c757d;
+
+    }
+
+
+    .stat-card h1 {
+
+        margin: 4px 0 0;
+
+        font-size: 30px;
+
+        color: #172b4d;
+
+    }
+
+
+    /* =================================================
+       SECTION TITLE
+    ================================================= */
+
+    .section-title {
+
+        font-weight: 700;
+
+        color: #172b4d;
+
+        margin: 35px 0 20px;
+
+    }
+
+
+    /* =================================================
+       AVAILABLE EXAM
+    ================================================= */
+
+    .module-grid {
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(
+                auto-fit,
+                minmax(280px, 1fr)
+            );
+
+        gap: 25px;
+
+    }
+
+
+    .module-card {
+
+        background: white;
+
+        border-radius: 18px;
+
+        padding: 30px;
+
+        text-align: center;
+
+        box-shadow:
+            0 8px 25px
+            rgba(0,0,0,0.07);
+
+    }
+
+
+    .module-card .icon {
+
+        width: 70px;
+
+        height: 70px;
+
+        margin: 0 auto 15px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border-radius: 18px;
+
+        font-size: 32px;
+
+        background: #e7f0ff;
+
+    }
+
+
+    .module-card h3 {
+
+        color: #172b4d;
+
+        font-weight: 700;
+
+    }
+
+
+    .module-card p {
+
+        color: #6c757d;
+
+    }
+
+
+    .start-btn {
+
+        border: none;
+
+        background:
+            linear-gradient(
+                135deg,
+                #0d6efd,
+                #084298
+            );
+
+        color: white;
+
+        padding: 11px 25px;
+
+        border-radius: 10px;
+
+        font-weight: 600;
+
+        cursor: pointer;
+
+        transition: 0.3s;
+
+    }
+
+
+    .start-btn:hover {
+
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 6px 15px
+            rgba(13,110,253,0.3);
+
+    }
+
+
+    /* =================================================
+       RESULT SUCCESS CARD
+    ================================================= */
+
+    .result-success {
+
+        background:
+            linear-gradient(
+                135deg,
+                #e8fff2,
+                #f7fffb
+            );
+
+        border:
+            1px solid #b7ebc6;
+
+        border-radius: 18px;
+
+        padding: 25px;
+
+        margin-top: 35px;
+
+        box-shadow:
+            0 8px 25px
+            rgba(25,135,84,0.08);
+
+    }
+
+
+    .result-success h3 {
+
+        color: #198754;
+
+        font-weight: 700;
+
+    }
+
+
+    .result-buttons {
+
+        display: flex;
+
+        flex-wrap: wrap;
+
+        gap: 12px;
+
+        margin-top: 18px;
+
+    }
+
+
+    .result-btn {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 8px;
+
+        text-decoration: none;
+
+        padding: 10px 18px;
+
+        border-radius: 9px;
+
+        font-weight: 600;
+
+    }
+
+
+    .result-btn-primary {
+
+        background: #0d6efd;
+
+        color: white;
+
+    }
+
+
+    .result-btn-primary:hover {
+
+        background: #084298;
+
+        color: white;
+
+    }
+
+
+    .result-btn-success {
+
+        background: #198754;
+
+        color: white;
+
+    }
+
+
+    .result-btn-success:hover {
+
+        background: #146c43;
+
+        color: white;
+
+    }
+
+
+    /* =================================================
+       LATEST RESULT DETAILS
+    ================================================= */
+
+    .latest-result {
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(4, 1fr);
+
+        gap: 15px;
+
+        margin-top: 20px;
+
+    }
+
+
+    .result-box {
+
+        background: white;
+
+        border-radius: 12px;
+
+        padding: 15px;
+
+        text-align: center;
+
+        border: 1px solid #e5e7eb;
+
+    }
+
+
+    .result-box small {
+
+        display: block;
+
+        color: #6c757d;
+
+        margin-bottom: 5px;
+
+    }
+
+
+    .result-box strong {
+
+        font-size: 20px;
+
+        color: #172b4d;
+
+    }
+
+
+    /* =================================================
+       CERTIFICATE MESSAGE
+    ================================================= */
+
+    .certificate-message {
+
+        margin-top: 15px;
+
+        padding: 12px 15px;
+
+        border-radius: 10px;
+
+        background: #fff3cd;
+
+        color: #664d03;
+
+        border: 1px solid #ffecb5;
+
+    }
+
+
+    /* =================================================
+       HISTORY
+    ================================================= */
+
+    .history-header {
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+
+        margin-top: 45px;
+
+        margin-bottom: 20px;
+
+    }
+
+
+    .history-header h2 {
+
+        margin: 0;
+
+    }
+
+
+    .table-wrapper {
+
+        background: white;
+
+        border-radius: 18px;
+
+        padding: 10px;
+
+        overflow-x: auto;
+
+        box-shadow:
+            0 8px 25px
+            rgba(0,0,0,0.07);
+
+    }
+
+
+    table {
+
+        width: 100%;
+
+        border-collapse: collapse;
+
+        min-width: 1250px;
+
+    }
+
+
+    table th {
+
+        background: #0d6efd;
+
+        color: white;
+
+        padding: 14px 10px;
+
+        font-size: 14px;
+
+        white-space: nowrap;
+
+    }
+
+
+    table td {
+
+        padding: 13px 10px;
+
+        border-bottom:
+            1px solid #eeeeee;
+
+        text-align: center;
+
+        font-size: 14px;
+
+        white-space: nowrap;
+
+    }
+
+
+    table tbody tr:hover {
+
+        background: #f7faff;
+
+    }
+
+
+    /* =================================================
+       STATUS
+    ================================================= */
+
+    .pass-badge {
+
+        background: #d1e7dd;
+
+        color: #0f5132;
+
+        padding: 5px 10px;
+
+        border-radius: 20px;
+
+        font-weight: 700;
+
+        font-size: 12px;
+
+    }
+
+
+    .fail-badge {
+
+        background: #f8d7da;
+
+        color: #842029;
+
+        padding: 5px 10px;
+
+        border-radius: 20px;
+
+        font-weight: 700;
+
+        font-size: 12px;
+
+    }
+
+
+    .completed-badge {
+
+        background: #cff4fc;
+
+        color: #055160;
+
+        padding: 5px 10px;
+
+        border-radius: 20px;
+
+        font-weight: 700;
+
+        font-size: 12px;
+
+    }
+
+
+    /* =================================================
+       BAND SCORE
+    ================================================= */
+
+    .band-score {
+
+        font-size: 16px;
+
+        font-weight: 700;
+
+        color: #6f42c1;
+
+    }
+
+
+    /* =================================================
+       ACTION BUTTONS IN HISTORY
+    ================================================= */
+
+    .history-actions {
+
+        display: flex;
+
+        gap: 7px;
+
+        justify-content: center;
+
+    }
+
+
+    .history-action {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 5px;
+
+        text-decoration: none;
+
+        padding: 6px 10px;
+
+        border-radius: 7px;
+
+        font-size: 12px;
+
+        font-weight: 600;
+
+    }
+
+
+    .history-result {
+
+        background: #0d6efd;
+
+        color: white;
+
+    }
+
+
+    .history-result:hover {
+
+        background: #084298;
+
+        color: white;
+
+    }
+
+
+    .history-certificate {
+
+        background: #198754;
+
+        color: white;
+
+    }
+
+
+    .history-certificate:hover {
+
+        background: #146c43;
+
+        color: white;
+
+    }
+
+
+    /* =================================================
+       EMPTY HISTORY
+    ================================================= */
+
+    .empty-history {
+
+        padding: 45px 20px;
+
+        text-align: center;
+
+        color: #6c757d;
+
+    }
+
+
+    .empty-history i {
+
+        font-size: 45px;
+
+        margin-bottom: 15px;
+
+        color: #adb5bd;
+
+    }
+
+
+    /* =================================================
+       RESPONSIVE
+    ================================================= */
+
+    @media (max-width: 1000px) {
+
+        .latest-result {
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+        }
+
+    }
+
+
+    @media (max-width: 768px) {
+
+        header {
+
+            flex-direction: column;
+
+            align-items: flex-start;
+
+            gap: 15px;
+
+        }
+
+
+        .welcome-card {
+
+            flex-direction: column;
+
+            align-items: flex-start;
+
+        }
+
+
+        .stats-grid {
+
+            grid-template-columns: 1fr;
+
+        }
+
+
+        .latest-result {
+
+            grid-template-columns: 1fr;
+
+        }
+
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header>
+
+```
+<div>
+
+    <h1>
+        Online Examination System
+    </h1>
+
+    <p>
+        Student Dashboard
+    </p>
+
+</div>
+
+
+<div class="header-user">
+
+    {% if student and student.photo %}
+        <img class="header-photo"
+             src="{{ url_for('static', filename='uploads/' ~ student.photo) }}"
+             alt="Profile"
+             onerror="this.onerror=null;this.src='{{ url_for('static', filename='images/default-user.svg') }}';">
+    {% else %}
+        <img class="header-photo"
+             src="{{ url_for('static', filename='images/default-user.svg') }}"
+             alt="Profile">
+    {% endif %}
+
+    <a href="{{ url_for('logout') }}"
+       class="logout-btn">
+
+        <i class="fas fa-right-from-bracket"></i>
+
+        Sign Out
+
+    </a>
+
+</div>
+```
+
+</header>
+
+<!-- =========================================================
+     MAIN CONTAINER
+========================================================= -->
+
+<div class="container">
+
+```
+<!-- =====================================================
+     WELCOME
+====================================================== -->
+
+<div class="welcome-card">
+
+    <div>
+
+        <h2>
+
+            Welcome,
+            {{ student.fullname if student else session.get('fullname', 'Student') }}! 👋
+
+        </h2>
+
+        <p>
+
+            Manage your examinations, view your results
+            and track your test performance.
+
+        </p>
+
+    </div>
+
+
+    <div class="welcome-icon">
+
+        {% if student and student.photo %}
+            <img src="{{ url_for('static', filename='uploads/' ~ student.photo) }}"
+                 alt="Profile"
+                 onerror="this.onerror=null;this.src='{{ url_for('static', filename='images/default-user.svg') }}';">
+        {% else %}
+            <img src="{{ url_for('static', filename='images/default-user.svg') }}"
+                 alt="Profile">
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     STATISTICS
+====================================================== -->
+
+<div class="stats-grid">
+
+
+    <!-- AVAILABLE EXAMS -->
+
+    <div class="card stat-card">
+
+        <div class="stat-icon blue-icon">
+
+            <i class="fas fa-book-open"></i>
+
+        </div>
+
+        <div>
+
+            <h3>
+                Available Exams
+            </h3>
+
+            <h1>
+
+                <i class="fas fa-arrow-right"
+                   style="font-size:20px;">
+                </i>
+
+            </h1>
+
+        </div>
+
+    </div>
+
+
+    <!-- TESTS COMPLETED -->
+
+    <div class="card stat-card">
+
+        <div class="stat-icon green-icon">
+
+            <i class="fas fa-circle-check"></i>
+
+        </div>
+
+        <div>
+
+            <h3>
+                Tests Completed
+            </h3>
+
+            <h1>
+                {{ tests_completed|default(0) }}
+            </h1>
+
+        </div>
+
+    </div>
+
+
+    <!-- ACCOUNT STATUS -->
+
+    <div class="card stat-card">
+
+        <div class="stat-icon purple-icon">
+
+            <i class="fas fa-chart-line"></i>
+
+        </div>
+
+        <div>
+
+            <h3>
+                Account Status
+            </h3>
+
+            <h1>
+                {{ account_status|default('Active') }}
+            </h1>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     AVAILABLE EXAMS
+====================================================== -->
+
+<h2 class="section-title">
+
+    <i class="fas fa-file-pen"></i>
+
+    Available Exams
+
+</h2>
+
+
+<div class="module-grid">
+
+    <div class="module-card">
+
+        <div class="icon">
+
+            📝
+
+        </div>
+
+
+        <h3>
+            Online Examination
+        </h3>
+
+
+        <p>
+
+            View available subjects and start
+            your examination.
+
+        </p>
+
+
+        <a href="{{ url_for('available_exams') }}"
+           style="text-decoration:none;">
+
+            <button type="button"
+                    class="start-btn">
+
+                <i class="fas fa-eye"></i>
+
+                View Exams
+
+            </button>
+
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     LATEST EXAM RESULT
+====================================================== -->
+
+{% if exam_submitted and history %}
+
+    {% set latest = history[0] %}
+
+
+    <div class="result-success">
+
+
+        <h3>
+
+            🎉 Exam Submitted Successfully!
+
+        </h3>
+
+
+        <p>
+
+            Congratulations
+            <strong>
+                {{ session.get('fullname', 'Student') }}
+            </strong>!
+
+            Your examination has been successfully
+            evaluated and saved.
+
+        </p>
+
+
+        <!-- =============================================
+             LATEST RESULT DETAILS
+        ============================================== -->
+
+        <div class="latest-result">
+
+
+            <div class="result-box">
+
+                <small>
+                    Subject
+                </small>
+
+                <strong>
+                    {{ latest.subject_name }}
+                </strong>
+
+            </div>
+
+
+            <div class="result-box">
+
+                <small>
+                    Score
+                </small>
+
+                <strong>
+                    {{ "%.1f"|format(latest.score|float) }}
+                </strong>
+
+            </div>
+
+
+            <div class="result-box">
+
+                <small>
+                    Percentage
+                </small>
+
+                <strong>
+                    {{ "%.2f"|format(latest.percentage|float) }}%
+                </strong>
+
+            </div>
+
+
+            <div class="result-box">
+
+                <small>
+                    Band Score
+                </small>
+
+                <strong>
+                    {{ "%.1f"|format(latest.band_score|float) }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- =============================================
+             RESULT / CERTIFICATE BUTTONS
+        ============================================== -->
+
+        <div class="result-buttons">
+
+
+            <!-- RESULT PDF -->
+
+            {% if latest.attempt_id %}
+
+                <a href="{{ url_for(
+                            'download_result_pdf',
+                            attempt_id=latest.attempt_id
+                          ) }}"
+                   class="result-btn result-btn-primary">
+
+                    <i class="fas fa-file-pdf"></i>
+
+                    Download Result
+
+                </a>
+
+            {% endif %}
+
+
+            <!-- CERTIFICATE -->
+
+{% if latest.band_score|float > 6 %}
+
+    <a href="{{ url_for(
+                'download_certificate',
+                attempt_id=latest.attempt_id
+              ) }}"
+       class="result-btn result-btn-success">
+
+        <i class="fas fa-award"></i>
+
+        Download Certificate
+
+    </a>
+
+{% else %}
+
+    <div class="certificate-message">
+
+        <i class="fas fa-info-circle"></i>
+
+        Certificate is available only when
+        Band Score is greater than 6.
+
+    </div>
+
+{% endif %}
+        </div>
+
+    </div>
+
+{% endif %}
+
+
+<!-- =====================================================
+     TEST HISTORY
+====================================================== -->
+
+<div class="history-header">
+
+    <h2 class="section-title">
+
+        <i class="fas fa-clock-rotate-left"></i>
+
+        Test History
+
+    </h2>
+
+</div>
+
+
+<div class="table-wrapper">
+
+
+    {% if history %}
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Date</th>
+
+                    <th>Subject</th>
+
+                    <th>Score</th>
+
+                    <th>Total Questions</th>
+
+                    <th>Attempted</th>
+
+                    <th>Correct</th>
+
+                    <th>Wrong</th>
+
+                    <th>Unattempted</th>
+
+                    <th>Percentage</th>
+
+                    <th>Band Score</th>
+
+                    <th>Status</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+            {% for item in history %}
+
+                <tr>
+
+
+                    <!-- DATE -->
+
+                    <td>
+
+                        {{ item.test_date }}
+
+                    </td>
+
+
+                    <!-- SUBJECT -->
+
+                    <td>
+
+                        <strong>
+
+                            {{ item.subject_name }}
+
+                        </strong>
+
+                    </td>
+
+
+                    <!-- SCORE -->
+
+                    <td>
+
+                        <strong>
+
+                            {{ "%.1f"|format(item.score|float) }}
+
+                        </strong>
+
+                    </td>
+
+
+                    <!-- TOTAL -->
+
+                    <td>
+
+                        {{ item.total_questions }}
+
+                    </td>
+
+
+                    <!-- ATTEMPTED -->
+
+                    <td>
+
+                        {{ item.attempted_questions }}
+
+                    </td>
+
+
+                    <!-- CORRECT -->
+
+                    <td>
+
+                        <strong>
+
+                            {{ item.correct_answers }}
+
+                        </strong>
+
+                    </td>
+
+
+                    <!-- WRONG -->
+
+                    <td>
+
+                        {{ item.wrong_answers }}
+
+                    </td>
+
+
+                    <!-- UNATTEMPTED -->
+
+                    <td>
+
+                        {{ item.unattempted }}
+
+                    </td>
+
+
+                    <!-- PERCENTAGE -->
+
+                    <td>
+
+                        {{ "%.2f"|format(item.percentage|float) }}%
+
+                    </td>
+
+
+                    <!-- BAND SCORE -->
+
+                    <td>
+
+                        <span class="band-score">
+
+                            {{ "%.1f"|format(item.band_score|float) }}
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- STATUS -->
+
+                    <td>
+
+                        {% if item.history_status == 'Completed' %}
+
+                            {% if item.band_score|float > 6 %}
+
+                                <span class="pass-badge">
+
+                                    Passed
+
+                                </span>
+
+                            {% else %}
+
+                                <span class="fail-badge">
+
+                                    Completed
+
+                                </span>
+
+                            {% endif %}
+
+                        {% else %}
+
+                            <span class="completed-badge">
+
+                                {{ item.history_status|default('Completed') }}
+
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <!-- ACTION -->
+
+                    <td>
+
+                        <div class="history-actions">
+
+
+                            <!-- RESULT BUTTON -->
+
+                            {% if item.attempt_id %}
+
+                                <a href="{{ url_for(
+                                            'download_result_pdf',
+                                            attempt_id=item.attempt_id
+                                          ) }}"
+                                   class="history-action history-result">
+
+                                    <i class="fas fa-file-pdf"></i>
+
+                                    Result
+
+                                </a>
+
+                            {% endif %}
+
+
+                           <!-- =================================
+     CERTIFICATE BUTTON
+================================= -->
+
+{% if item.band_score|float > 6 %}
+
+    <a href="{{ url_for(
+                'download_certificate',
+                attempt_id=item.attempt_id
+              ) }}"
+       class="history-action history-certificate">
+
+        <i class="fas fa-award"></i>
+
+        Certificate
+
+    </a>
+
+{% endif %}
+                        </div>
+
+                    </td>
+
+
+                </tr>
+
+            {% endfor %}
+
+
+            </tbody>
+
+        </table>
+
+
+    {% else %}
+
+
+        <!-- =================================================
+             EMPTY HISTORY
+        ================================================== -->
+
+        <div class="empty-history">
+
+
+            <i class="fas fa-file-circle-xmark"></i>
+
+
+            <h4>
+
+                No Test History Available
+
+            </h4>
+
+
+            <p>
+
+                You have not completed any examination yet.
+
+            </p>
+
+
+            <a href="{{ url_for('available_exams') }}"
+               class="btn btn-primary">
+
+                <i class="fas fa-play"></i>
+
+                Take Your First Exam
+
+            </a>
+
+
+        </div>
+
+
+    {% endif %}
+
+
+</div>
+
+
+</div>
+
+<!-- =========================================================
+     SUCCESS MODAL
+========================================================= -->
+
+{% if exam_submitted %}
+
+
+<div class="modal fade"
+     id="resultSuccessModal"
+     tabindex="-1"
+     aria-hidden="true">
+
+
+    <div class="modal-dialog modal-dialog-centered">
+
+
+        <div class="modal-content"
+             style="
+                 border:none;
+                 border-radius:20px;
+                 overflow:hidden;
+             ">
+
+
+            <div class="modal-body text-center"
+                 style="padding:40px 25px;">
+
+
+                <div style="
+                    width:80px;
+                    height:80px;
+                    margin:0 auto 20px;
+                    border-radius:50%;
+                    background:#d1e7dd;
+                    color:#198754;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    font-size:40px;
+                ">
+
+                    <i class="fas fa-check"></i>
+
+                </div>
+
+
+                <h2 style="
+                    color:#198754;
+                    font-weight:700;
+                ">
+
+                    Congratulations! 🎉
+
+                </h2>
+
+
+                <p>
+
+                    Your examination has been submitted
+                    successfully.
+
+                </p>
+
+
+                <p>
+
+                    Your score, percentage, band score and
+                    test history have been saved.
+
+                </p>
+
+
+                <button type="button"
+                        class="btn btn-primary px-4"
+                        data-bs-dismiss="modal">
+
+                    OK
+
+                </button>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endif %}
+
+<!-- =========================================================
+     BOOTSTRAP JS
+========================================================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+<!-- =========================================================
+     SHOW SUCCESS MODAL
+========================================================= -->
+
+{% if exam_submitted %}
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const modalElement =
+            document.getElementById(
+                "resultSuccessModal"
+            );
+
+        if (modalElement) {
+
+            const resultModal =
+                new bootstrap.Modal(
+                    modalElement
+                );
+
+            resultModal.show();
+
+        }
+
+    }
+);
+
+</script>
+
+{% endif %}
+
+<!-- =========================================================
+     DARK MODE
+========================================================= -->
+
+<script src="{{ url_for(
+    'static',
+    filename='js/darkmode.js'
+) }}">
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {{ exam.exam_name }}
+    </title>
+
+
+    <!-- =====================================================
+         EXAM CSS
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for(
+            'static',
+            filename='css/exam.css'
+        ) }}"
+    >
+
+
+    <!-- =====================================================
+         PROCTORING CSS
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for(
+            'static',
+            filename='css/proctoring.css'
+        ) }}"
+    >
+
+
+    <!-- =====================================================
+         FONT AWESOME
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     EXAM HEADER
+========================================================= -->
+
+<header class="exam-header">
+
+    <div class="exam-title">
+
+        <i class="fas fa-graduation-cap"></i>
+
+        <div>
+
+            <h2>
+                {{ exam.exam_name }}
+            </h2>
+
+            <span>
+                {{ exam.subject_name }}
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- TIMER -->
+
+    <div class="exam-timer">
+
+        <i class="fas fa-clock"></i>
+
+        <span id="timer">
+            00:00
+        </span>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================================
+     PROCTORING BAR
+========================================================= -->
+
+<div class="proctoring-bar">
+
+
+    <div class="proctor-status">
+
+        <span class="online-dot"></span>
+
+        <span>
+            Proctoring Active
+        </span>
+
+    </div>
+
+
+
+    <div class="proctor-mini-status">
+
+        <span id="faceStatus">
+
+            <i class="fas fa-user"></i>
+
+            Face: Checking
+
+        </span>
+
+
+        <span id="phoneStatus">
+
+            <i class="fas fa-mobile-screen"></i>
+
+            Phone: Clear
+
+        </span>
+
+
+        <span id="cameraStatus">
+
+            <i class="fas fa-camera"></i>
+
+            Camera: Active
+
+        </span>
+
+    </div>
+
+
+
+    <div class="violation-status">
+
+        <i class="fas fa-triangle-exclamation"></i>
+
+        Warnings:
+
+        <strong id="warningCount">
+            0
+        </strong>
+
+        / 3
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     MAIN EXAM AREA
+========================================================= -->
+
+<main class="exam-container">
+
+
+    <!-- =====================================================
+         QUESTION AREA
+    ====================================================== -->
+
+    <section class="question-area">
+
+
+        <div class="question-card">
+
+
+            <!-- QUESTION HEADER -->
+
+            <div class="question-top">
+
+                <span id="questionNumber">
+                    Question 1
+                </span>
+
+
+                <span>
+
+                    Total Questions:
+
+                    {{ questions|length }}
+
+                </span>
+
+            </div>
+
+
+
+            <!-- PROGRESS BAR -->
+
+            <div class="progress-container">
+
+                <div
+                    id="questionProgress"
+                    class="progress-bar"
+                ></div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 EXAM FORM
+            ================================================== -->
+
+            <form
+                id="examForm"
+                method="POST"
+                action="{{ url_for(
+                    'submit_exam',
+                    subject_id=exam.subject_id
+                ) }}"
+            >
+
+
+                {% for question in questions %}
+
+
+                <!-- =================================================
+                     QUESTION
+                ================================================== -->
+
+                <div
+                    class="question"
+                    data-question="{{ loop.index }}"
+                    style="{% if not loop.first %}display:none;{% endif %}"
+                >
+
+
+                    <h3>
+
+                        {{ loop.index }}.
+
+                        {{ question.question_text }}
+
+                    </h3>
+
+
+
+                    <!-- =================================================
+                         OPTIONS
+                    ================================================== -->
+
+                    <div class="options">
+
+
+                        <!-- OPTION 1 -->
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="answer_{{ question['question_id'] }}"
+                                value="1"
+                            >
+
+                            <span class="option-letter">
+                                A
+                            </span>
+
+                            <span>
+                                {{ question.option1 }}
+                            </span>
+
+                        </label>
+
+
+
+                        <!-- OPTION 2 -->
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="answer_{{ question['question_id'] }}"
+                                value="2"
+                            >
+
+                            <span class="option-letter">
+                                B
+                            </span>
+
+                            <span>
+                                {{ question.option2 }}
+                            </span>
+
+                        </label>
+
+
+
+                        <!-- OPTION 3 -->
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="answer_{{ question['question_id'] }}"
+                                value="3"
+                            >
+
+                            <span class="option-letter">
+                                C
+                            </span>
+
+                            <span>
+                                {{ question.option3 }}
+                            </span>
+
+                        </label>
+
+
+
+                        <!-- OPTION 4 -->
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="answer_{{ question['question_id'] }}"
+                                value="4"
+                            >
+
+                            <span class="option-letter">
+                                D
+                            </span>
+
+                            <span>
+                                {{ question.option4 }}
+                            </span>
+
+                        </label>
+
+
+                    </div>
+
+                </div>
+
+
+                {% endfor %}
+
+
+
+                <!-- =================================================
+                     QUESTION NAVIGATION
+                ================================================== -->
+
+                <div class="question-navigation">
+
+
+                    <button
+                        type="button"
+                        id="previousButton"
+                        class="nav-btn"
+                        onclick="previousQuestion()"
+                    >
+
+                        <i class="fas fa-arrow-left"></i>
+
+                        Previous
+
+                    </button>
+
+
+
+                    <button
+                        type="button"
+                        id="nextButton"
+                        class="nav-btn primary"
+                        onclick="nextQuestion()"
+                    >
+
+                        Next
+
+                        <i class="fas fa-arrow-right"></i>
+
+                    </button>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     SUBMIT BUTTON
+                ================================================== -->
+
+                <button
+                    type="submit"
+                    id="submitExamButton"
+                    class="submit-exam-btn"
+                    onclick="return confirmSubmit()"
+                    style="display:none;"
+                >
+
+                    <i class="fas fa-paper-plane"></i>
+
+                    Submit Exam
+
+                </button>
+
+
+            </form>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         SIDEBAR
+    ========================================================= -->
+
+    <aside class="exam-sidebar">
+
+
+        <!-- =====================================================
+             WEBCAM
+        ====================================================== -->
+
+        <div class="webcam-card">
+
+
+            <div class="sidebar-title">
+
+                <span>
+
+                    <i class="fas fa-video"></i>
+
+                    Live Proctoring
+
+                </span>
+
+
+                <span class="camera-live">
+                    LIVE
+                </span>
+
+            </div>
+
+
+
+            <div class="webcam-container">
+
+
+                <video
+                    id="examWebcam"
+                    autoplay
+                    muted
+                    playsinline
+                ></video>
+
+
+
+                <canvas
+                    id="detectionCanvas"
+                    style="display:none;"
+                ></canvas>
+
+
+
+                <div
+                    id="webcamError"
+                    class="webcam-error"
+                >
+
+                    <i class="fas fa-video-slash"></i>
+
+                    <p>
+                        Camera unavailable
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="camera-status">
+
+                <span class="online-dot"></span>
+
+                Camera Active
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================================
+             AI STATUS
+        ====================================================== -->
+
+        <div class="ai-status-card">
+
+
+            <div class="sidebar-title">
+
+                <span>
+
+                    <i class="fas fa-robot"></i>
+
+                    AI Monitoring
+
+                </span>
+
+            </div>
+
+
+
+            <div class="ai-item">
+
+                <span>
+                    Face Detection
+                </span>
+
+                <strong id="faceCount">
+                    Checking
+                </strong>
+
+            </div>
+
+
+
+            <div class="ai-item">
+
+                <span>
+                    Multiple Person
+                </span>
+
+                <strong id="personCount">
+                    Checking
+                </strong>
+
+            </div>
+
+
+
+            <div class="ai-item">
+
+                <span>
+                    Mobile Phone
+                </span>
+
+                <strong id="phoneDetection">
+                    Checking
+                </strong>
+
+            </div>
+
+
+
+            <div class="ai-item">
+
+                <span>
+                    Eye/Gaze
+                </span>
+
+                <strong id="eyeStatus">
+                    Checking
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================================
+             QUESTION PALETTE
+        ====================================================== -->
+
+        <div class="palette-card">
+
+
+            <div class="sidebar-title">
+
+                <span>
+
+                    <i class="fas fa-table-cells"></i>
+
+                    Question Palette
+
+                </span>
+
+            </div>
+
+
+
+            <div class="palette">
+
+
+                {% for question in questions %}
+
+
+                <button
+                    type="button"
+                    class="palette-button {% if loop.first %}active{% endif %}"
+                    onclick="showQuestion({{ loop.index }})"
+                    id="palette-{{ loop.index }}"
+                >
+
+                    {{ loop.index }}
+
+                </button>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+
+            <div class="palette-info">
+
+
+                <div>
+
+                    <span class="legend answered"></span>
+
+                    Answered
+
+                </div>
+
+
+                <div>
+
+                    <span class="legend unanswered"></span>
+
+                    Not Answered
+
+                </div>
+
+
+                <div>
+
+                    <span class="legend current"></span>
+
+                    Current
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================================
+             STUDENT
+        ====================================================== -->
+
+        <div class="student-card">
+
+
+            <i class="fas fa-user-circle"></i>
+
+
+            <div>
+
+                <strong>
+                    {{ session['fullname'] }}
+                </strong>
+
+
+                <span>
+                    {{ session['username'] }}
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+    </aside>
+
+
+</main>
+
+
+
+<!-- =========================================================
+     WARNING MODAL
+========================================================= -->
+
+<div
+    id="warningModal"
+    class="warning-modal"
+>
+
+
+    <div class="warning-modal-content">
+
+
+        <div class="warning-icon">
+
+            <i class="fas fa-triangle-exclamation"></i>
+
+        </div>
+
+
+        <h2>
+            Examination Warning
+        </h2>
+
+
+        <p id="warningMessage">
+
+            Please stay on the examination page.
+
+        </p>
+
+
+        <button
+            type="button"
+            onclick="closeWarning()"
+        >
+
+            Continue Exam
+
+        </button>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     RECORDING INDICATOR
+========================================================= -->
+
+<div
+    id="recordingIndicator"
+    class="recording-indicator"
+>
+
+    <span class="recording-dot"></span>
+
+    Proctoring Recording Active
+
+</div>
+
+
+
+<!-- =========================================================
+     AI LIBRARIES
+========================================================= -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"
+></script>
+
+
+<script
+    src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.20.0/dist/tf.min.js"
+></script>
+
+
+<script
+    src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js"
+></script>
+
+
+
+<!-- =========================================================
+     EXAM CONFIGURATION
+========================================================= -->
+
+<script>
+
+window.EXAM_CONFIG = {
+
+    duration:
+        {{ exam.duration }},
+
+    totalQuestions:
+        {{ questions|length }},
+
+    maxWarnings:
+        3,
+
+    attemptId:
+        {{ attempt_id|default(0) }},
+
+    videoUploadUrl:
+        "{{ url_for(
+            'upload_proctoring_video'
+        ) }}",
+
+    audioUploadUrl:
+        "{{ url_for(
+            'upload_proctoring_audio'
+        ) }}",
+
+    screenshotUploadUrl:
+        "{{ url_for(
+            'upload_proctoring_screenshot'
+        ) }}",
+
+    eventUrl:
+        "{{ url_for(
+            'log_proctoring_event'
+        ) }}"
+
+};
+
+</script>
+
+
+
+<!-- =========================================================
+     PROCTORING JAVASCRIPT
+========================================================= -->
+
+<script
+    src="{{ url_for(
+        'static',
+        filename='js/proctoring.js'
+    ) }}"
+></script>
+
+
+
+<script>
+
+/* ============================================================
+   QUESTION NAVIGATION
+============================================================ */
+
+let currentQuestion = 1;
+
+const totalQuestions =
+    {{ questions|length }};
+
+
+
+function showQuestion(number) {
+
+    if (
+        number < 1 ||
+        number > totalQuestions
+    ) {
+
+        return;
+
+    }
+
+
+    document
+        .querySelectorAll(".question")
+        .forEach(function(question) {
+
+            question.style.display =
+                "none";
+
+        });
+
+
+    const question =
+        document.querySelector(
+            `.question[data-question="${number}"]`
+        );
+
+
+    if (question) {
+
+        question.style.display =
+            "block";
+
+    }
+
+
+    currentQuestion =
+        number;
+
+
+    document.getElementById(
+        "questionNumber"
+    ).innerText =
+        "Question " + number;
+
+
+    const progress =
+        (number / totalQuestions) * 100;
+
+
+    document.getElementById(
+        "questionProgress"
+    ).style.width =
+        progress + "%";
+
+
+    document
+        .querySelectorAll(".palette-button")
+        .forEach(function(button) {
+
+            button.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    const paletteButton =
+        document.getElementById(
+            "palette-" + number
+        );
+
+
+    if (paletteButton) {
+
+        paletteButton.classList.add(
+            "active"
+        );
+
+    }
+
+
+    document.getElementById(
+        "previousButton"
+    ).disabled =
+        number === 1;
+
+
+    if (number === totalQuestions) {
+
+        document.getElementById(
+            "nextButton"
+        ).style.display =
+            "none";
+
+
+        document.getElementById(
+            "submitExamButton"
+        ).style.display =
+            "inline-flex";
+
+    }
+    else {
+
+        document.getElementById(
+            "nextButton"
+        ).style.display =
+            "inline-flex";
+
+
+        document.getElementById(
+            "submitExamButton"
+        ).style.display =
+            "none";
+
+    }
+
+}
+
+
+
+/* ============================================================
+   NEXT QUESTION
+============================================================ */
+
+function nextQuestion() {
+
+    if (
+        currentQuestion <
+        totalQuestions
+    ) {
+
+        showQuestion(
+            currentQuestion + 1
+        );
+
+    }
+
+}
+
+
+
+/* ============================================================
+   PREVIOUS QUESTION
+============================================================ */
+
+function previousQuestion() {
+
+    if (
+        currentQuestion > 1
+    ) {
+
+        showQuestion(
+            currentQuestion - 1
+        );
+
+    }
+
+}
+
+
+
+/* ============================================================
+   ANSWER PALETTE
+============================================================ */
+
+document
+    .querySelectorAll(
+        '#examForm input[type="radio"]'
+    )
+    .forEach(function(input) {
+
+
+        input.addEventListener(
+            "change",
+            function() {
+
+
+                const questionElement =
+                    this.closest(
+                        ".question"
+                    );
+
+
+                if (!questionElement) {
+
+                    return;
+
+                }
+
+
+                const questionNumber =
+                    questionElement.dataset.question;
+
+
+                const button =
+                    document.getElementById(
+                        "palette-" +
+                        questionNumber
+                    );
+
+
+                if (button) {
+
+                    button.classList.add(
+                        "answered"
+                    );
+
+                }
+
+            }
+        );
+
+    });
+
+
+
+/* ============================================================
+   TIMER
+============================================================ */
+
+let remainingSeconds =
+    {{ exam.duration }} * 60;
+
+
+
+function updateTimer() {
+
+
+    const minutes =
+        Math.floor(
+            remainingSeconds / 60
+        );
+
+
+    const seconds =
+        remainingSeconds % 60;
+
+
+    document.getElementById(
+        "timer"
+    ).innerText =
+
+        String(minutes).padStart(
+            2,
+            "0"
+        )
+
+        +
+
+        ":"
+
+        +
+
+        String(seconds).padStart(
+            2,
+            "0"
+        );
+
+
+    if (
+        remainingSeconds <= 0
+    ) {
+
+        autoSubmitExam();
+
+        return;
+
+    }
+
+
+    remainingSeconds--;
+
+}
+
+
+
+const examTimer =
+    setInterval(
+        updateTimer,
+        1000
+    );
+
+
+updateTimer();
+
+
+
+/* ============================================================
+   CONFIRM SUBMIT
+============================================================ */
+
+function confirmSubmit() {
+
+
+    if (
+        window.examSubmitted
+    ) {
+
+        return true;
+
+    }
+
+
+    const answer =
+        confirm(
+            "Are you sure you want to submit the exam?"
+        );
+
+
+    if (answer) {
+
+
+        window.examSubmitted =
+            true;
+
+
+        clearInterval(
+            examTimer
+        );
+
+
+        if (
+            typeof window.stopProctoring ===
+            "function"
+        ) {
+
+            window.stopProctoring();
+
+        }
+
+
+        return true;
+
+    }
+
+
+    return false;
+
+}
+
+
+
+/* ============================================================
+   AUTO SUBMIT
+============================================================ */
+
+function autoSubmitExam() {
+
+
+    if (
+        window.examSubmitted
+    ) {
+
+        return;
+
+    }
+
+
+    window.examSubmitted =
+        true;
+
+
+    clearInterval(
+        examTimer
+    );
+
+
+    if (
+        typeof window.stopProctoring ===
+        "function"
+    ) {
+
+        window.stopProctoring();
+
+    }
+
+
+    const form =
+        document.getElementById(
+            "examForm"
+        );
+
+
+    if (form) {
+
+        form.submit();
+
+    }
+
+}
+
+
+
+/* ============================================================
+   PREVENT ACCIDENTAL DOUBLE SUBMISSION
+============================================================ */
+
+document
+    .getElementById("examForm")
+    .addEventListener(
+        "submit",
+        function() {
+
+            window.examSubmitted =
+                true;
+
+            clearInterval(
+                examTimer
+            );
+
+        }
+    );
+
+
+
+/* ============================================================
+   INITIAL QUESTION
+============================================================ */
+
+showQuestion(1);
+
+</script>
+
+
+</body>
+
+</html>

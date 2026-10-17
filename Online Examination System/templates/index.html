@@ -1,0 +1,329 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Online Examination System</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body class="home-page">
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <!-- Logo -->
+        <div class="logo">
+            <i class="fas fa-graduation-cap"></i>
+            Online Examination System
+        </div>
+
+        <!-- Navigation Links -->
+        <ul class="nav-links">
+
+            <li>
+                <a href="#home">Home</a>
+            </li>
+
+            <li>
+                <a href="#features">Features</a>
+            </li>
+
+            <li>
+                <a href="#about">About</a>
+            </li>
+
+            <li>
+                <a href="#contact">Contact</a>
+            </li>
+
+
+            <!-- ================= LOGGED-IN USER ================= -->
+
+            {% if session.get('student_id') %}
+
+                <!-- Profile Image -->
+                <li class="profile-menu">
+
+                    {% if student and student.photo %}
+
+                        <img src="{{ url_for('static',
+                            filename='uploads/' + student.photo) }}"
+                             width="50"
+                             height="50"
+                             alt="Profile"
+                             style="border-radius:50%;
+                                    object-fit:cover;"
+                             onerror="this.onerror=null;this.src='{{ url_for('static', filename='images/default-user.svg') }}';">
+
+                    {% else %}
+
+                        <img src="{{ url_for('static',
+                            filename='images/default-user.svg') }}"
+                             width="50"
+                             height="50"
+                             alt="Default Profile"
+                             style="border-radius:50%;
+                                    object-fit:cover;">
+
+                    {% endif %}
+
+                </li>
+
+
+                <!-- Welcome Message -->
+                <li>
+                    <span class="welcome-text">
+
+                        Welcome,
+                        {{ student.fullname if student else session.get('fullname', session.get('username')) }}
+
+                    </span>
+                </li>
+
+
+                <!-- Dashboard -->
+                <li>
+
+                    <a href="{{ url_for('dashboard') }}"
+                       class="login-btn">
+
+                        <i class="fas fa-dashboard"></i>
+                        Dashboard
+
+                    </a>
+
+                </li>
+
+
+                <!-- Profile -->
+                <li>
+
+                    <a href="{{ url_for('edit_profile') }}"
+                       class="login-btn">
+
+                        <i class="fas fa-user"></i>
+                        Profile
+
+                    </a>
+
+                </li>
+
+
+                <!-- Sign Out -->
+                <li>
+
+                    <a href="{{ url_for('logout') }}"
+                       class="register-btn">
+
+                        <i class="fas fa-sign-out-alt"></i>
+                        Sign Out
+
+                    </a>
+
+                </li>
+
+
+            <!-- ================= LOGGED-OUT USER ================= -->
+
+            {% else %}
+
+                <!-- Sign In -->
+                <li>
+
+                    <a href="{{ url_for('login_page') }}"
+                       class="login-btn">
+
+                        <i class="fas fa-sign-in-alt"></i>
+                        Sign In
+
+                    </a>
+
+                </li>
+
+
+                <!-- Register -->
+                <li>
+
+                    <a href="{{ url_for('register') }}"
+                       class="register-btn">
+
+                        <i class="fas fa-user-plus"></i>
+                        Register
+
+                    </a>
+
+                </li>
+
+            {% endif %}
+
+        </ul>
+
+    </nav>
+
+
+    <!-- ================= HERO SECTION ================= -->
+
+    <section id="home" class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Online Examination System
+            </h1>
+
+            <p>
+                Conduct online exams, evaluate students,
+                and generate instant results efficiently.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= FEATURES ================= -->
+
+    <section id="features" class="glass-section">
+
+        <h2>
+            System Features
+        </h2>
+
+        <div class="feature-container">
+
+            <!-- Feature 1 -->
+            <div class="feature-card">
+
+                <i class="fas fa-user-shield"></i>
+
+                <h3>
+                    Secure Login
+                </h3>
+
+                <p>
+                    Safe authentication for users.
+                </p>
+
+            </div>
+
+
+            <!-- Feature 2 -->
+            <div class="feature-card">
+
+                <i class="fas fa-laptop"></i>
+
+                <h3>
+                    Online Examination
+                </h3>
+
+                <p>
+                    Attend exams from anywhere.
+                </p>
+
+            </div>
+
+
+            <!-- Feature 3 -->
+            <div class="feature-card">
+
+                <i class="fas fa-clock"></i>
+
+                <h3>
+                    Timed Exams
+                </h3>
+
+                <p>
+                    Automatic timer management.
+                </p>
+
+            </div>
+
+
+            <!-- Feature 4 -->
+            <div class="feature-card">
+
+                <i class="fas fa-chart-line"></i>
+
+                <h3>
+                    Instant Results
+                </h3>
+
+                <p>
+                    Automatic result generation.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= ABOUT ================= -->
+
+    <section id="about" class="glass-section">
+
+        <h2>
+            About System
+        </h2>
+
+        <p>
+            Online Examination System helps educational
+            institutes conduct exams digitally with
+            automatic evaluation and result generation.
+        </p>
+
+    </section>
+
+
+    <!-- ================= CONTACT ================= -->
+
+    <section id="contact" class="glass-section">
+
+        <h2>
+            Contact Us
+        </h2>
+
+        <p>
+            <i class="fas fa-envelope"></i>
+            admin@onlineexam.com
+        </p>
+
+        <p>
+            <i class="fas fa-phone"></i>
+            +91 9876543210
+        </p>
+
+        <p>
+            <i class="fas fa-map-marker-alt"></i>
+            Ahmedabad, Gujarat
+        </p>
+
+    </section>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="footer">
+
+        <p>
+            © 2026 Online Examination System |
+            All Rights Reserved
+        </p>
+
+    </footer>
+
+</body>
+
+</html>
+

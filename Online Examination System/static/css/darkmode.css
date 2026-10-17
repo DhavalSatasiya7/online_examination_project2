@@ -1,0 +1,148 @@
+/* ==========================
+   GLOBAL DARK MODE
+========================== */
+
+body{
+    transition:0.4s ease;
+}
+
+/* ---------- DARK ---------- */
+
+body.dark-mode{
+
+    background:#000 !important;
+    color:#fff !important;
+
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6,
+body.dark-mode p,
+body.dark-mode span,
+body.dark-mode label,
+body.dark-mode strong,
+body.dark-mode td,
+body.dark-mode th{
+
+    color:white !important;
+
+}
+
+/* ---------- Navbar ---------- */
+
+body.dark-mode nav,
+body.dark-mode .navbar,
+body.dark-mode header{
+
+    background:#111 !important;
+
+}
+
+/* ---------- Cards ---------- */
+
+body.dark-mode .card{
+
+    background:#1b1b1b !important;
+
+    color:white !important;
+
+    border:1px solid #444;
+
+}
+
+/* ---------- Tables ---------- */
+
+body.dark-mode table{
+
+    background:#111 !important;
+    color:white !important;
+
+}
+
+body.dark-mode table th{
+
+    background:#222 !important;
+    color:white !important;
+
+}
+
+body.dark-mode table td{
+
+    background:#111 !important;
+    color:white !important;
+
+}
+
+/* ---------- Forms ---------- */
+
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea{
+
+    background:#222 !important;
+
+    color:white !important;
+
+    border:1px solid #555;
+
+}
+
+/* ---------- Buttons ---------- */
+
+body.dark-mode .btn{
+
+    color:white !important;
+
+}
+
+/* ---------- Containers ---------- */
+
+body.dark-mode .container{
+
+    color:white;
+
+}
+
+/* ---------- Alert ---------- */
+
+body.dark-mode .alert{
+
+    color:white;
+
+}
+
+/* ---------- Links ---------- */
+
+body.dark-mode a{
+
+    color:#4ea3ff;
+
+}
+
+/* ---------- Footer ---------- */
+
+body.dark-mode footer{
+
+    background:#111 !important;
+
+}
+
+/* ---------- Progress ---------- */
+
+body.dark-mode .progress{
+
+    background:#444;
+
+}
+
+/* ---------- Smooth ---------- */
+
+*{
+
+    transition:.3s;
+
+}

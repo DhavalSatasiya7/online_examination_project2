@@ -1,0 +1,155 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Segoe UI,sans-serif;
+}
+
+body{
+    background:#f5f7fb;
+}
+
+header{
+    background:white;
+    border-bottom:1px solid #ddd;
+    padding:20px 60px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+header h1{
+    font-size:28px;
+}
+
+header p{
+    color:#666;
+}
+
+.back-btn{
+    text-decoration:none;
+    border:1px solid #ddd;
+    padding:10px 15px;
+    border-radius:8px;
+    color:black;
+    background:white;
+}
+
+.container{
+    width:90%;
+    max-width:1100px;
+    margin:20px auto;
+}
+
+.card{
+    background:white;
+    border-radius:10px;
+    padding:20px;
+    margin-bottom:20px;
+    border:1px solid #e5e7eb;
+}
+
+.title-box{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.icon{
+    width:50px;
+    height:50px;
+    background:#2563eb;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:10px;
+    font-size:24px;
+}
+
+.info-grid{
+    display:flex;
+    justify-content:space-around;
+    margin-top:25px;
+}
+
+.info-grid span{
+    display:block;
+    color:#666;
+    margin-bottom:5px;
+}
+
+.notice{
+    background:#fff7ed;
+    border:1px solid #fdba74;
+    padding:20px;
+    border-radius:10px;
+    margin-bottom:20px;
+}
+
+.notice h3{
+    color:#ea580c;
+    margin-bottom:10px;
+}
+
+.notice p{
+    color:#9a3412;
+}
+
+.sub-title{
+    color:#666;
+    margin-top:5px;
+    margin-bottom:15px;
+}
+
+.rules{
+    padding-left:20px;
+}
+
+.rules li{
+    margin-bottom:12px;
+}
+
+.audio-btn{
+    width:100%;
+    padding:12px;
+    border:1px solid #ddd;
+    background:white;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.checkbox{
+    display:flex;
+    gap:10px;
+    line-height:1.7;
+}
+
+.buttons{
+    margin-top:20px;
+    display:flex;
+    gap:15px;
+}
+
+.cancel-btn{
+    width:250px;
+    padding:12px;
+    border:1px solid #ddd;
+    background:white;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.start-btn{
+    width:250px;
+    padding:12px;
+    border:none;
+    background:#4f7cff;
+    color:white;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.start-btn:hover{
+    background:#2563eb;
+}

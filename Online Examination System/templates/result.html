@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Exam Result</title>
+
+    <!-- Bootstrap CSS -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-success text-white text-center">
+
+                    <h2>
+
+                        <i class="fa-solid fa-circle-check"></i>
+
+                        Exam Submitted Successfully
+
+                    </h2>
+
+                </div>
+
+                <div class="card-body">
+
+                    <h4 class="text-center mb-4">
+
+                        Your Examination Result
+
+                    </h4>
+
+                    <table class="table table-bordered">
+
+                        <tr>
+                            <th width="35%">Student Name</th>
+                            <td>{{ student_name }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Subject</th>
+                            <td>{{ subject_name }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Score</th>
+                            <td>{{ score }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Band Score</th>
+                            <td>{{ band_score }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Status</th>
+
+                            <td>
+
+                                {% if status == "PASS" %}
+
+                                    <span class="badge bg-success">
+
+                                        PASS
+
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-danger">
+
+                                        FAIL
+
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Date</th>
+
+                            <td>{{ date }}</td>
+
+                        </tr>
+
+                    </table>
+
+                    <div class="text-center mt-4">
+
+                        {% if pdf_file %}
+
+                       <a href="{{ url_for('download_result_pdf') }}"
+   class="btn btn-success">
+    Download Result PDF
+</a>
+
+                        {% endif %}
+
+                        {% if session.get('certificate_file') %}
+
+                        <a href="{{ url_for('download_certificate') }}"
+                           class="btn btn-warning">
+
+                            <i class="fa-solid fa-award"></i>
+
+                            Download Certificate
+
+                        </a>
+
+                        {% endif %}
+
+                        <br><br>
+
+                        <a href="{{ url_for('dashboard') }}"
+                           class="btn btn-success">
+
+                            <i class="fa-solid fa-house"></i>
+
+                            Back To Dashboard
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

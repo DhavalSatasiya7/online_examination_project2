@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: online-examination-system
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: MYSQL_HOST
+        sync: false
+      - key: MYSQL_PORT
+        value: "3306"
+      - key: MYSQL_USER
+        sync: false
+      - key: MYSQL_PASSWORD
+        sync: false
+      - key: MYSQL_DATABASE
+        value: exam
+      - key: MAIL_USERNAME
+        sync: false
+      - key: MAIL_PASSWORD
+        sync: false
+      - key: ADMIN_NOTIFY_EMAIL
+        sync: false

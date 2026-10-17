@@ -1,0 +1,580 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    background:#ffffff;
+
+    color:#000;
+
+    transition:.4s;
+
+}
+
+/* ===========================
+   HOME PAGE ONLY
+=========================== */
+
+body.home-page{
+
+    background:
+    linear-gradient(
+        rgba(0,0,0,.55),
+        rgba(0,0,0,.55)
+    ),
+    url("../images/exam-bg.jpg");
+
+    background-size:cover;
+
+    background-position:center;
+
+    background-repeat:no-repeat;
+
+    background-attachment:fixed;
+
+    color:white;
+
+}
+/* NAVBAR */
+
+.navbar{
+
+    position:fixed;
+    top:0;
+    width:100%;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:20px 50px;
+
+    background:rgba(0,0,0,0.35);
+
+    backdrop-filter:blur(15px);
+
+    z-index:1000;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:bold;
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    list-style:none;
+}
+
+.nav-links a{
+    color:white;
+    text-decoration:none;
+}
+
+.welcome-text{
+    font-weight:bold;
+    color:#fff;
+}
+
+.login-btn{
+
+    border:2px solid white;
+
+    padding:10px 20px;
+
+    border-radius:30px;
+}
+
+.register-btn{
+
+    background:white;
+
+    color:#4f46e5 !important;
+
+    padding:10px 20px;
+
+    border-radius:30px;
+
+    font-weight:bold;
+}
+
+/* HERO */
+
+.hero{
+
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+
+    padding:100px 20px;
+}
+
+.hero-content{
+    max-width:900px;
+}
+
+.hero-content h1{
+
+    font-size:60px;
+
+    margin-bottom:20px;
+}
+
+.hero-content p{
+
+    font-size:22px;
+
+    margin-bottom:30px;
+}
+
+.hero-buttons{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:20px;
+}
+
+.btn-primary,
+.btn-secondary{
+
+    text-decoration:none;
+
+    padding:15px 35px;
+
+    border-radius:30px;
+
+    font-weight:bold;
+}
+
+.btn-primary{
+    background:#4f46e5;
+    color:white;
+}
+
+.btn-secondary{
+    background:white;
+    color:#4f46e5;
+}
+
+/* GLASS SECTION */
+
+.glass-section{
+
+    width:90%;
+
+    margin:40px auto;
+
+    padding:50px;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,255,255,0.15);
+
+    text-align:center;
+}
+
+.glass-section h2{
+    margin-bottom:25px;
+}
+
+/* FEATURES */
+
+.feature-container{
+
+    display:flex;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    gap:25px;
+}
+
+.feature-card{
+
+    width:250px;
+
+    padding:25px;
+
+    border-radius:15px;
+
+    background:rgba(255,255,255,0.08);
+
+    border:1px solid rgba(255,255,255,0.15);
+}
+
+.feature-card i{
+
+    font-size:40px;
+
+    margin-bottom:15px;
+
+    color:#8b5cf6;
+}
+
+/* FOOTER */
+
+.footer{
+
+    margin-top:50px;
+
+    text-align:center;
+
+    padding:25px;
+
+    background:rgba(0,0,0,0.6);
+}
+
+/* LOGIN PAGE */
+
+.auth-container{
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+}
+
+.auth-box{
+
+    width:420px;
+
+    padding:40px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    background:rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,255,255,0.15);
+}
+
+.auth-icon{
+
+    font-size:60px;
+
+    margin-bottom:15px;
+}
+
+.auth-box h2{
+
+    margin-bottom:20px;
+}
+
+.auth-box input{
+
+    width:100%;
+
+    padding:14px;
+
+    margin-bottom:15px;
+
+    border:none;
+
+    border-radius:10px;
+
+    outline:none;
+}
+
+.auth-box button{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#4f46e5;
+
+    color:white;
+
+    cursor:pointer;
+}
+
+.link-text{
+    margin-top:20px;
+}
+
+.link-text a{
+    color:white;
+    font-weight:bold;
+}
+
+.back-home{
+
+    display:inline-block;
+
+    margin-top:15px;
+
+    color:#ddd;
+
+    text-decoration:none;
+}
+
+.alert{
+    background:#ef4444;
+    padding:10px;
+    border-radius:8px;
+    margin-bottom:15px;
+}
+
+
+/* ======================================
+   HOME PAGE
+====================================== */
+
+.home-page{
+
+    background:
+    linear-gradient(
+        rgba(0,0,0,.45),
+        rgba(0,0,0,.45)
+    ),
+    url("../images/exam-bg.jpg");
+
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+
+    color:white;
+
+    transition:.5s;
+
+}
+
+
+/* ======================================
+   OTHER PAGES
+====================================== */
+
+.dashboard-page{
+
+    background:white;
+
+    color:black;
+
+    transition:.5s;
+
+}
+
+
+/* ======================================
+   DARK MODE
+====================================== */
+
+body.dark-mode{
+
+    background:#000 !important;
+
+    color:#fff !important;
+
+    transition:.5s;
+
+}
+
+/* Home page keeps its image in dark mode */
+
+body.home-page.dark-mode{
+
+    background:
+    linear-gradient(
+        rgba(0,0,0,.75),
+        rgba(0,0,0,.75)
+    ),
+    url("../images/exam-bg.jpg");
+
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+
+}
+
+/* Dashboard pages */
+
+body.dashboard-page.dark-mode{
+
+    background:#000 !important;
+
+    color:#fff !important;
+
+}
+
+/* Cards */
+
+.dark-mode .card{
+
+    background:#1b1b1b !important;
+
+    color:white !important;
+
+}
+
+/* Tables */
+
+.dark-mode table{
+
+    background:#111;
+
+    color:white;
+
+}
+
+.dark-mode th{
+
+    background:#222 !important;
+
+    color:white;
+
+}
+
+.dark-mode td{
+
+    background:#111 !important;
+
+    color:white;
+
+}
+
+/* Forms */
+
+.dark-mode input,
+.dark-mode textarea,
+.dark-mode select{
+
+    background:#222;
+
+    color:white;
+
+    border:1px solid #555;
+
+}
+
+/* Buttons */
+
+.dark-mode .btn{
+
+    transition:.4s;
+
+}
+
+/* Navbar */
+
+.dark-mode nav,
+.dark-mode header{
+
+    background:#111 !important;
+
+}
+
+/* Links */
+
+.dark-mode a{
+
+    color:#6ab7ff;
+
+}
+
+/* Container */
+
+.dark-mode .container{
+
+    color:white;
+
+}
+
+#theme-toggle{
+
+    position:fixed;
+
+    top:15px;
+
+    right:20px;
+
+    z-index:99999;
+
+    border-radius:30px;
+
+    padding:10px 20px;
+
+}
+
+/* ===========================
+   Theme Button
+=========================== */
+
+.theme-container{
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    padding:18px 40px;
+
+}
+
+.theme-btn{
+
+    background:white;
+
+    color:black;
+
+    padding:12px 25px;
+
+    border:none;
+
+    border-radius:30px;
+
+    font-size:18px;
+
+    cursor:pointer;
+
+}
+.theme-btn:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.theme-container{
+
+    margin-top:100px;   /* Navbar height */
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    padding-right:40px;
+
+}
+
+

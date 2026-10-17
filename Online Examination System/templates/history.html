@@ -1,0 +1,23 @@
+<table class="table">
+
+<tr>
+    <th>Date</th>
+    <th>Subject</th>
+    <th>Band</th>
+    <th>Status</th>
+</tr>
+
+{% for row in history %}
+
+<tr>
+
+<td>{{row.test_date}}</td>
+<td>{{row.subject_name}}</td>
+<td>{{row.band_score}}</td>
+<td>{{row.status}}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>

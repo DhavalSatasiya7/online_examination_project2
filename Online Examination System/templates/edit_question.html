@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Edit Question</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+rel="stylesheet">
+
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+
+<div class="row justify-content-center">
+
+<div class="col-lg-8">
+
+<div class="card shadow">
+
+<div class="card-header bg-warning">
+
+<h3>Edit Question</h3>
+
+</div>
+
+<div class="card-body">
+
+<form method="POST">
+
+<div class="mb-3">
+
+<label class="form-label">
+
+Subject
+
+</label>
+
+<select
+name="subject_id"
+class="form-select"
+required>
+
+{% for subject in subjects %}
+
+<option
+value="{{ subject.id }}"
+
+{% if subject.id==question.subject_id %}
+selected
+{% endif %}>
+
+{{ subject.subject_name }}
+
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+<div class="mb-3">
+
+<label class="form-label">
+
+Question
+
+</label>
+
+<textarea
+name="question_text"
+class="form-control"
+rows="3"
+required>{{ question.question_text }}</textarea>
+
+</div>
+
+<div class="mb-3">
+
+<label>
+
+Option 1
+
+</label>
+
+<input
+type="text"
+name="option1"
+class="form-control"
+value="{{ question.option1 }}"
+required>
+
+</div>
+
+<div class="mb-3">
+
+<label>
+
+Option 2
+
+</label>
+
+<input
+type="text"
+name="option2"
+class="form-control"
+value="{{ question.option2 }}"
+required>
+
+</div>
+
+<div class="mb-3">
+
+<label>
+
+Option 3
+
+</label>
+
+<input
+type="text"
+name="option3"
+class="form-control"
+value="{{ question.option3 }}"
+required>
+
+</div>
+
+<div class="mb-3">
+
+<label>
+
+Option 4
+
+</label>
+
+<input
+type="text"
+name="option4"
+class="form-control"
+value="{{ question.option4 }}"
+required>
+
+</div>
+
+<div class="mb-3">
+
+<label>
+
+Correct Option
+
+</label>
+
+<select
+name="correct_option"
+class="form-select">
+
+<option value="1"
+{% if question.correct_option==1 %}
+selected
+{% endif %}>
+Option 1
+</option>
+
+<option value="2"
+{% if question.correct_option==2 %}
+selected
+{% endif %}>
+Option 2
+</option>
+
+<option value="3"
+{% if question.correct_option==3 %}
+selected
+{% endif %}>
+Option 3
+</option>
+
+<option value="4"
+{% if question.correct_option==4 %}
+selected
+{% endif %}>
+Option 4
+</option>
+
+</select>
+
+</div>
+
+<button
+class="btn btn-success">
+
+Update Question
+
+</button>
+
+<a
+href="{{ url_for('view_questions') }}"
+class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

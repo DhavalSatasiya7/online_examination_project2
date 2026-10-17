@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Exam Instructions - {{ exam.exam_name }}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for(
+            'static',
+            filename='css/proctoring.css'
+        ) }}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    >
+
+</head>
+
+<body>
+
+<div class="instruction-page">
+
+    <div class="instruction-card">
+
+        <!-- HEADER -->
+
+        <div class="instruction-header">
+
+            <div class="header-icon">
+
+                <i class="fas fa-shield-halved"></i>
+
+            </div>
+
+            <div>
+
+                <h1>
+                    {{ exam.exam_name }}
+                </h1>
+
+                <p>
+                    Secure Online Examination
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- EXAM INFORMATION -->
+
+        <div class="exam-info">
+
+            <div class="info-box">
+
+                <i class="fas fa-book"></i>
+
+                <span>Subject</span>
+
+                <strong>
+                    {{ exam.subject_name }}
+                </strong>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <i class="fas fa-clock"></i>
+
+                <span>Duration</span>
+
+                <strong>
+                    {{ exam.duration }} Minutes
+                </strong>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <i class="fas fa-star"></i>
+
+                <span>Total Marks</span>
+
+                <strong>
+                    {{ exam.total_marks }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- INSTRUCTIONS -->
+
+        <div class="rules-section">
+
+            <h2>
+
+                <i class="fas fa-list-check"></i>
+
+                Examination Instructions
+
+            </h2>
+
+            <ul>
+
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    Keep your face visible in the webcam.
+                </li>
+
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    Only one person should be visible during the examination.
+                </li>
+
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    Do not use a mobile phone or other prohibited device.
+                </li>
+
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    Do not switch browser tabs.
+                </li>
+
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    Keep the examination window in fullscreen mode.
+                </li>
+
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    Camera and microphone must remain enabled.
+                </li>
+
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    The test may be automatically submitted after repeated violations.
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <!-- PROCTORING NOTICE -->
+
+        <div class="privacy-notice">
+
+            <i class="fas fa-circle-info"></i>
+
+            <div>
+
+                <strong>
+                    Proctoring & Recording Notice
+                </strong>
+
+                <p>
+
+                    With your permission, this examination may use
+                    your camera and microphone for examination
+                    monitoring. Webcam video, audio and screenshots
+                    may be temporarily uploaded to the examination
+                    server for proctoring purposes.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- SYSTEM CHECK -->
+
+        <div class="system-check">
+
+            <h2>
+
+                <i class="fas fa-computer"></i>
+
+                System Check
+
+            </h2>
+
+
+            <!-- CAMERA -->
+
+            <div class="check-row">
+
+                <div class="check-icon camera-icon">
+
+                    <i class="fas fa-camera"></i>
+
+                </div>
+
+                <div class="check-content">
+
+                    <h3>
+                        Camera
+                    </h3>
+
+                    <p>
+                        Camera permission is required.
+                    </p>
+
+                </div>
+
+                <span
+                    id="cameraStatus"
+                    class="status pending"
+                >
+                    Checking...
+                </span>
+
+            </div>
+
+
+            <!-- MICROPHONE -->
+
+            <div class="check-row">
+
+                <div class="check-icon mic-icon">
+
+                    <i class="fas fa-microphone"></i>
+
+                </div>
+
+                <div class="check-content">
+
+                    <h3>
+                        Microphone
+                    </h3>
+
+                    <p>
+                        Microphone permission is required.
+                    </p>
+
+                </div>
+
+                <span
+                    id="micStatus"
+                    class="status pending"
+                >
+                    Checking...
+                </span>
+
+            </div>
+
+
+            <!-- BROWSER -->
+
+            <div class="check-row">
+
+                <div class="check-icon browser-icon">
+
+                    <i class="fas fa-globe"></i>
+
+                </div>
+
+                <div class="check-content">
+
+                    <h3>
+                        Browser
+                    </h3>
+
+                    <p>
+                        Modern browser required.
+                    </p>
+
+                </div>
+
+                <span
+                    id="browserStatus"
+                    class="status success"
+                >
+                    Supported
+                </span>
+
+            </div>
+
+
+            <!-- CAMERA PREVIEW -->
+
+            <div class="camera-test">
+
+                <h3>
+                    Camera Preview
+                </h3>
+
+                <video
+                    id="instructionCamera"
+                    autoplay
+                    muted
+                    playsinline
+                ></video>
+
+            </div>
+
+
+            <!-- CONSENT -->
+
+            <label class="consent-box">
+
+                <input
+                    type="checkbox"
+                    id="consentCheckbox"
+                >
+
+                <span>
+
+                    I understand the examination rules and
+                    explicitly consent to camera/microphone
+                    access and proctoring recording during
+                    this examination.
+
+                </span>
+
+            </label>
+
+
+            <!-- START -->
+
+            <button
+                id="startTestButton"
+                class="start-test-button"
+                disabled
+            >
+
+                <i class="fas fa-play"></i>
+
+                Start Test
+
+            </button>
+
+
+            <a
+                href="{{ url_for('available_exams') }}"
+                class="back-button"
+            >
+
+                <i class="fas fa-arrow-left"></i>
+
+                Back to Exams
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const startUrl =
+    "{{ url_for('start_exam', subject_id=exam.subject_id) }}";
+
+let mediaStream = null;
+
+let cameraOK = false;
+
+let microphoneOK = false;
+
+
+const cameraStatus =
+    document.getElementById(
+        "cameraStatus"
+    );
+
+const micStatus =
+    document.getElementById(
+        "micStatus"
+    );
+
+const consentCheckbox =
+    document.getElementById(
+        "consentCheckbox"
+    );
+
+const startButton =
+    document.getElementById(
+        "startTestButton"
+    );
+
+const video =
+    document.getElementById(
+        "instructionCamera"
+    );
+
+
+async function checkDevices() {
+
+    try {
+
+        mediaStream =
+            await navigator.mediaDevices.getUserMedia({
+                video: true,
+                audio: true
+            });
+
+
+        video.srcObject =
+            mediaStream;
+
+
+        cameraOK = true;
+
+        microphoneOK = true;
+
+
+        cameraStatus.innerText =
+            "Ready";
+
+        cameraStatus.className =
+            "status success";
+
+
+        micStatus.innerText =
+            "Ready";
+
+        micStatus.className =
+            "status success";
+
+
+        updateStartButton();
+
+    }
+    catch(error) {
+
+        console.error(error);
+
+
+        cameraStatus.innerText =
+            "Permission Required";
+
+        cameraStatus.className =
+            "status failed";
+
+
+        micStatus.innerText =
+            "Permission Required";
+
+        micStatus.className =
+            "status failed";
+
+
+        cameraOK = false;
+
+        microphoneOK = false;
+
+    }
+
+}
+
+
+function updateStartButton() {
+
+    startButton.disabled =
+        !(
+            cameraOK &&
+            microphoneOK &&
+            consentCheckbox.checked
+        );
+
+}
+
+
+consentCheckbox.addEventListener(
+    "change",
+    updateStartButton
+);
+
+
+startButton.addEventListener(
+    "click",
+    async function() {
+
+        startButton.disabled = true;
+
+        try {
+            await document.documentElement.requestFullscreen();
+
+            if(mediaStream) {
+                mediaStream
+                    .getTracks()
+                    .forEach(
+                        track => track.stop()
+                    );
+            }
+
+            window.location.href = startUrl;
+        }
+        catch(error) {
+            console.error("Could not enter fullscreen mode:", error);
+            alert("Fullscreen mode is required to start the exam. Please allow fullscreen and try again.");
+            updateStartButton();
+        }
+    }
+);
+
+
+checkDevices();
+
+</script>
+
+</body>
+
+</html>

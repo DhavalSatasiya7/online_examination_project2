@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Leaderboard</title>
+
+    <!-- Bootstrap CSS -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+
+        body{
+            background:#f5f5f5;
+        }
+
+        .navbar{
+            margin-bottom:30px;
+        }
+
+        .card{
+            border:none;
+            border-radius:12px;
+        }
+
+        .table td,
+        .table th{
+            vertical-align:middle;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<!-- =========================
+        NAVBAR
+========================= -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    <div class="container">
+
+        <a class="navbar-brand fw-bold"
+           href="{{ url_for('home') }}">
+
+            <i class="fa-solid fa-graduation-cap"></i>
+
+            Online Examination System
+
+        </a>
+
+        <div>
+
+            <a href="{{ url_for('admin_dashboard') }}"
+               class="btn btn-outline-light me-2">
+
+                <i class="fa-solid fa-house"></i>
+
+                Dashboard
+
+            </a>
+
+            <a href="{{ url_for('logout') }}"
+               class="btn btn-danger">
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<div class="container mt-4">
+
+    <h2 class="text-center mb-4">
+        🏆 Top 10 Students Leaderboard
+    </h2>
+
+    <table class="table table-bordered table-hover text-center">
+
+        <thead class="table-dark">
+
+        <tr>
+
+            <th>Rank</th>
+
+            <th>Student Name</th>
+
+            <th>Best Score</th>
+
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for student in leaderboard %}
+
+        <tr>
+
+            <td>
+
+                {% if loop.index == 1 %}
+                    🥇 {{ loop.index }}
+                {% elif loop.index == 2 %}
+                    🥈 {{ loop.index }}
+                {% elif loop.index == 3 %}
+                    🥉 {{ loop.index }}
+                {% else %}
+                    {{ loop.index }}
+                {% endif %}
+
+            </td>
+
+            <td>
+
+                {{ student.username }}
+
+            </td>
+
+            <td>
+
+                {{ student.best_score }}
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<!-- Bootstrap JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</body>
+</html>
